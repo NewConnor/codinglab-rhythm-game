@@ -1,2 +1,2 @@
-# codinglab-rythm-game
-CodingLab's Rythm Game Project
+# CodingLab's Rhythm Game Project
+
