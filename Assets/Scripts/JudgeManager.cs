@@ -5,6 +5,8 @@ using UnityEngine;
 public class JudgeManager : MonoBehaviour
 {
     public static JudgeManager Instance;
+    public GameObject effectManager;
+    EffectManager effect = player.GetComponent<EffectManager>();
 
     // 라인별로 노트들을 관리하는 딕셔너리
     private Dictionary<int, List<NoteJudger>> notePool = new Dictionary<int, List<NoteJudger>>();
@@ -92,19 +94,19 @@ public class JudgeManager : MonoBehaviour
         // 판정 결과 - 퍼펙트
         if (dist <= closest.perfectRange)
         {
-            Debug.Log($"Perfect Line {line}");
+            // effect.PerfectEffect(line);
         }
 
         // 판정 결과 - 굿
         else if (dist <= closest.goodRange)
         {
-            Debug.Log($"Good Line {line}");
+            // effect.GoodEffect(line);
         }
 
         // 판정 결과 - 배드
         else
         {
-            Debug.Log($"Miss Line {line}");
+            // effect.MissEffect(line);
         }
 
         closest.judged = true;
