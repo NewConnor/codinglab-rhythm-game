@@ -41,25 +41,11 @@ public class JudgeManager : MonoBehaviour
             if (closest == null || closest.judged) continue;
 
             KeyCode key = GetKeyForLine(line);
+
+            // ------------------ 판정 파트 ------------------
             if (Input.GetKeyDown(key))
             {
-                float dist = closest.DistanceToJudgeLine();
-
-                if (dist <= closest.perfectRange)
-                {
-                    Debug.Log($"Perfect Line {line}");
-                }
-                else if (dist <= closest.goodRange)
-                {
-                    Debug.Log($"Good Line {line}");
-                }
-                else
-                {
-                    Debug.Log($"Miss Line {line}");
-                }
-
-                closest.judged = true;
-                Destroy(closest.gameObject);
+                NoteJudge(closest, line);
             }
             for (int i = notePool[line].Count - 1; i >= 0; i--)
             {
@@ -77,7 +63,7 @@ public class JudgeManager : MonoBehaviour
     }
 
     // 가장 가까운 노트를 반환
-        NoteJudger GetClosestNoteInLine(int line)
+    NoteJudger GetClosestNoteInLine(int line)
     {
         float minDistance = float.MaxValue;
         NoteJudger closest = null;
@@ -95,6 +81,34 @@ public class JudgeManager : MonoBehaviour
         }
 
         return closest;
+    }
+
+    // 거리를 판단하여 판단 결과를 출력하는 파트를 따로 함수로 작성하였습니다.
+    // 판단 결과에 따라 실행되는 특정 코드나 이펙트는 아래 NoteJudge 함수에서 처리됩니다.
+    private void NoteJudge(NoteJudger closest, int line)
+    {
+        float dist = closest.DistanceToJudgeLine();
+
+        // 판정 결과 - 퍼펙트
+        if (dist <= closest.perfectRange)
+        {
+            Debug.Log($"Perfect Line {line}");
+        }
+
+        // 판정 결과 - 굿
+        else if (dist <= closest.goodRange)
+        {
+            Debug.Log($"Good Line {line}");
+        }
+
+        // 판정 결과 - 배드
+        else
+        {
+            Debug.Log($"Miss Line {line}");
+        }
+
+        closest.judged = true;
+        Destroy(closest.gameObject);
     }
 
     // 라인 번호에 따라 키 매핑
