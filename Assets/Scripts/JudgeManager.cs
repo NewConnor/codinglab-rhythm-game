@@ -5,8 +5,10 @@ using UnityEngine;
 public class JudgeManager : MonoBehaviour
 {
     public static JudgeManager Instance;
-    public GameObject effectManager;
-    EffectManager effect = player.GetComponent<EffectManager>();
+    public GameObject judgeEffectManager;
+
+    private JudgeEffectManager judem;
+    public NoteJudgePreset noteJudgePreset;
 
     // 라인별로 노트들을 관리하는 딕셔너리
     private Dictionary<int, List<NoteJudger>> notePool = new Dictionary<int, List<NoteJudger>>();
@@ -19,6 +21,8 @@ public class JudgeManager : MonoBehaviour
         {
             notePool[i] = new List<NoteJudger>();
         }
+
+        judem = judgeEffectManager.GetComponent<JudgeEffectManager>();
     }
 
     public void RegisterNote(NoteJudger note)
@@ -86,28 +90,27 @@ public class JudgeManager : MonoBehaviour
     }
 
     // 거리를 판단하여 판단 결과를 출력하는 파트를 따로 함수로 작성하였습니다.
-    // 판단 결과에 따라 실행되는 특정 코드나 이펙트는 아래 NoteJudge 함수에서 처리됩니다.
+    // 판단 결과에 따라 실행되는 특정 코드는 아래 NoteJudge 함수에서 처리됩니다.
+    // 판단 결과에 따른 이펙트는 ShowJudgeEffect 함수에서 처리됩니다.
     private void NoteJudge(NoteJudger closest, int line)
     {
-        float dist = closest.DistanceToJudgeLine();
+        float distance = closest.DistanceToJudgeLine();
+        string judgement = "";
 
-        // 판정 결과 - 퍼펙트
-        if (dist <= closest.perfectRange)
+        if (distance <= noteJudgePreset.perfectRange)
         {
-            // effect.PerfectEffect(line);
+            judgement = "perfect";
         }
-
-        // 판정 결과 - 굿
-        else if (dist <= closest.goodRange)
+        else if (distance <= noteJudgePreset.goodRange)
         {
-            // effect.GoodEffect(line);
+            judgement = "good";
         }
-
-        // 판정 결과 - 배드
         else
         {
-            // effect.MissEffect(line);
+            judgement = "miss";
         }
+
+        judem.ShowJudgeEffect(judgement, closest.transform.position);
 
         closest.judged = true;
         Destroy(closest.gameObject);
