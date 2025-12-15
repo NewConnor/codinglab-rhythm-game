@@ -94,23 +94,30 @@ public class JudgeManager : MonoBehaviour
     // 판단 결과에 따른 이펙트는 ShowJudgeEffect 함수에서 처리됩니다.
     private void NoteJudge(NoteJudger closest, int line)
     {
-        float distance = closest.DistanceToJudgeLine();
+        float distance = closest.DistanceToJudgeLine() + noteJudgePreset.rangeOffset;
+        Vector3 position = new Vector3(closest.transform.position.x, closest.transform.position.y + noteJudgePreset.rangeOffset, closest.transform.position.z);
         string judgement = "";
+        int noteType = closest.GetType();
 
-        if (distance <= noteJudgePreset.perfectRange)
+        switch (noteType)
         {
-            judgement = "perfect";
+            case 0: // 1박자 노트
+                if (distance <= noteJudgePreset.perfectRange)
+                {
+                    judgement = "perfect";
+                }
+                else if (distance <= noteJudgePreset.goodRange)
+                {
+                    judgement = "good";
+                }
+                else
+                {
+                    judgement = "miss";
+                }
+                break;
+            
         }
-        else if (distance <= noteJudgePreset.goodRange)
-        {
-            judgement = "good";
-        }
-        else
-        {
-            judgement = "miss";
-        }
-
-        judem.ShowJudgeEffect(judgement, closest.transform.position);
+        judem.ShowJudgeEffect(judgement, position);
 
         closest.judged = true;
         Destroy(closest.gameObject);

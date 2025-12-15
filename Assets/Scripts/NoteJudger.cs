@@ -6,6 +6,7 @@ public class NoteJudger : MonoBehaviour
     public float targetY = -3f;
 
     public KeyCode assignedKey;
+    private int type;
     public bool judged = false;
 
     void Start()
@@ -23,4 +24,10 @@ public class NoteJudger : MonoBehaviour
     {
         return Mathf.Abs(transform.position.y - targetY);
     }
+
+    public void SetType(int noteType)
+    {
+        type = noteType;
+    }
+    public int GetType() {return type;}
 }

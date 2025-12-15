@@ -89,6 +89,7 @@ public class BeatNoteSpawner : MonoBehaviour
                     0);
 
                 GameObject note = Instantiate(prefabList[noteType], spawnPos, Quaternion.identity);
+                note.GetComponent<NoteJudger>().SetType(noteType);
 
                 NoteJudger judger = note.GetComponent<NoteJudger>();
                 if (judger != null)
