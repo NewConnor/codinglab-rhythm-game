@@ -1241,7 +1241,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   music: {fileID: 1251547658}
-  notePrefab: {fileID: 758331458202390871, guid: 594ba426bbc0df1479dc3643182a2c77, type: 3}
+  prefabList:
+  - {fileID: 758331458202390871, guid: 594ba426bbc0df1479dc3643182a2c77, type: 3}
+  - {fileID: 758331458202390871, guid: d2ce7c8ca31da45999cd17acd3ecaf3b, type: 3}
+  - {fileID: 758331458202390871, guid: bd93e58a069c14994a3af91032b7b154, type: 3}
   lines:
   - {fileID: 726163656}
   - {fileID: 1224762816}
@@ -1253,12 +1256,16 @@ MonoBehaviour:
   beatNotes:
   - time: 0
     line: 0
+    type: 0
   - time: 0
     line: 0
+    type: 0
   - time: 0
     line: 0
+    type: 0
   - time: 0
     line: 0
+    type: 0
   lineKeys: 73000000640000006b0000006c000000
 --- !u!4 &1251547660
 Transform:

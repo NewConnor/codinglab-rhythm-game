@@ -3,4 +3,5 @@ public class BeatNote
 {
     public float time;  // 시간(초)
     public int line;    // 라인 번호
+    public int type;    // 노트 유형
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class BeatNoteSpawner : MonoBehaviour
 {
     public AudioSource music;
-    public GameObject notePrefab;
+    public GameObject[] prefabList;
     public Transform[] lines;
 
     public float spawnY = 6f;
@@ -72,7 +72,14 @@ public class BeatNoteSpawner : MonoBehaviour
         while (nextNoteIndex < beatNotes.Count &&
                beatNotes[nextNoteIndex].time <= currentTime + noteOffsetTime)
         {
-            int lineIndex = beatNotes[nextNoteIndex].line;
+            int noteType = 0; 
+            int lineIndex = 0;
+            if (nextNoteIndex >= 0 && nextNoteIndex < beatNotes.Count && beatNotes[nextNoteIndex] != null)
+            {
+                lineIndex = beatNotes[nextNoteIndex].line;
+                noteType = beatNotes[nextNoteIndex].type;
+            }
+
 
             if (lineIndex >= 0 && lineIndex < lines.Length)
             {
@@ -81,7 +88,7 @@ public class BeatNoteSpawner : MonoBehaviour
                     spawnY,
                     0);
 
-                GameObject note = Instantiate(notePrefab, spawnPos, Quaternion.identity);
+                GameObject note = Instantiate(prefabList[noteType], spawnPos, Quaternion.identity);
 
                 NoteJudger judger = note.GetComponent<NoteJudger>();
                 if (judger != null)
