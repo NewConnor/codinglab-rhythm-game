@@ -1,11 +1,11 @@
 using UnityEngine;
-using TMPro; // TextMeshPro 사용
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     [Header("UI 연결")]
-    public TextMeshProUGUI scoreText;      // 점수 표시용 (예: 1250)
-    public TextMeshProUGUI comboText;      // 콤보 표시용 (예: COMBO x 10)
+    public TMP_Text scoreText;      
+    public TMP_Text comboText;      
 
     private int currentScore = 0;
     private int comboCount = 0;
@@ -15,24 +15,22 @@ public class ScoreManager : MonoBehaviour
         UpdateUI();
     }
 
-    // 외부에서 판정 결과를 매개변수로 호출 (예: ProcessJudgement("perfect"))
     public void ProcessJudgement(string judgement)
     {
         switch (judgement.ToLower())
         {
             case "perfect":
                 currentScore += 2;
-                comboCount++;
+                comboCount++; // Perfect일 때만 콤보 증가
                 break;
 
             case "good":
                 currentScore += 1;
-                comboCount++;
+                comboCount = 0; // Good일 때도 콤보 초기화 (혹은 유지하고 싶다면 이 줄 삭제)
                 break;
 
             case "miss":
-                // 점수 가산 없음
-                comboCount = 0; // 콤보 초기화
+                comboCount = 0; // Miss일 때 콤보 초기화
                 break;
         }
 
@@ -41,17 +39,12 @@ public class ScoreManager : MonoBehaviour
 
     void UpdateUI()
     {
-        // 점수 텍스트 업데이트
-        scoreText.text = currentScore.ToString();
+        if (scoreText != null) scoreText.text = currentScore.ToString();
 
-        // 콤보가 있을 때만 표시 (0콤보일 땐 숨김)
-        if (comboCount > 0)
+        if (comboText != null)
         {
-            comboText.text = $"COMBO x {comboCount}";
-        }
-        else
-        {
-            comboText.text = ""; 
+            if (comboCount > 0) comboText.text = $"COMBO x {comboCount}";
+            else comboText.text = "";
         }
     }
 }

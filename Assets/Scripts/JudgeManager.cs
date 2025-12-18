@@ -12,6 +12,10 @@ public class JudgeManager : MonoBehaviour
 
     public ScoreManager scoreManager;
 
+    public AudioSource hitAudioSource;
+    public float minPitch = 0.95f;
+    public float maxPitch = 1.05f;
+
     // 라인별로 노트들을 관리하는 딕셔너리
     private Dictionary<int, List<NoteJudger>> notePool = new Dictionary<int, List<NoteJudger>>();
 
@@ -25,6 +29,11 @@ public class JudgeManager : MonoBehaviour
         }
 
         judem = judgeEffectManager.GetComponent<JudgeEffectManager>();
+
+        if (hitAudioSource == null)
+        {
+            hitAudioSource = GetComponent<AudioSource>();
+        }
     }
 
     public void RegisterNote(NoteJudger note)
@@ -124,6 +133,12 @@ public class JudgeManager : MonoBehaviour
                 }
                 break;
             
+        }
+
+        if (judgement != "miss" && hitAudioSource != null)
+        {
+            hitAudioSource.pitch = Random.Range(minPitch, maxPitch);
+            hitAudioSource.PlayOneShot(hitAudioSource.clip);
         }
 
         if (scoreManager != null)
