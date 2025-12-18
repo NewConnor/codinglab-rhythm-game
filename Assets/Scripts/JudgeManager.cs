@@ -10,6 +10,8 @@ public class JudgeManager : MonoBehaviour
     private JudgeEffectManager judem;
     public NoteJudgePreset noteJudgePreset;
 
+    public ScoreManager scoreManager;
+
     // 라인별로 노트들을 관리하는 딕셔너리
     private Dictionary<int, List<NoteJudger>> notePool = new Dictionary<int, List<NoteJudger>>();
 
@@ -60,6 +62,12 @@ public class JudgeManager : MonoBehaviour
                 {
                     Debug.Log($"Miss Line {line}");
                     note.judged = true;
+                    
+                    if (scoreManager != null)
+                    {
+                        scoreManager.ProcessJudgement("miss");
+                    }
+
                     Destroy(note.gameObject);
                     notePool[line].RemoveAt(i);
                 }
@@ -117,6 +125,12 @@ public class JudgeManager : MonoBehaviour
                 break;
             
         }
+
+        if (scoreManager != null)
+        {
+            scoreManager.ProcessJudgement(judgement);
+        }
+
         judem.ShowJudgeEffect(judgement, position);
 
         closest.judged = true;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class BeatNoteSpawner : MonoBehaviour
 {
     public AudioSource music;
+    public string noteName = "The General";
     public GameObject[] prefabList;
     public Transform[] lines;
 
@@ -61,7 +62,7 @@ public class BeatNoteSpawner : MonoBehaviour
             return;
         }
 
-        LoadNotesFromJson("song1");
+        LoadNotesFromJson(noteName);
         music.Play();
     }
 
