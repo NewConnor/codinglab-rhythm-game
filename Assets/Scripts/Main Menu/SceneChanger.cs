@@ -3,27 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    public void Song1()
+    public void Song_1()
     {
-        PlayerPrefs.SetInt("SongIndex", 1);
+        SongIndex.Instance.songIndex = 0;
         SceneManager.LoadScene("Game");
     }
 
-    public void Song2()
+    public void Song_2()
     {
-        PlayerPrefs.SetInt("SongIndex", 2);
+        SongIndex.Instance.songIndex = 1;
         SceneManager.LoadScene("Game");
     }
 
-    public void Song3()
+    public void Song_3()
     {
-        PlayerPrefs.SetInt("SongIndex", 3);
+        SongIndex.Instance.songIndex = 2;
         SceneManager.LoadScene("Game");
     }
 
-    public void Song4()
+    public void Song_4()
     {
-        PlayerPrefs.SetInt("SongIndex", 4);
+        SongIndex.Instance.songIndex = 3;
         SceneManager.LoadScene("Game");
     }
 }

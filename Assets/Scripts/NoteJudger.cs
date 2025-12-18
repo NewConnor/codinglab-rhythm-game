@@ -29,5 +29,5 @@ public class NoteJudger : MonoBehaviour
     {
         type = noteType;
     }
-    public int GetType() {return type;}
+    public int GetNoteType() {return type;}
 }
